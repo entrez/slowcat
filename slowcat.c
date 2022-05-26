@@ -6,16 +6,18 @@
 
 #define ERRLEN 80
 
+int slowcat(const char *);
+
 useconds_t delay_time = 50000;
 extern int errno;
 
 static const char *const usage[] = {
-    "Usage: slowcat -d<usec> <filename>",
+    "Usage: slowcat -d<msec> <filename>",
     "",
     "Prints a file with a delay between each character",
     "",
     "Options:",
-    "    -d<usec>    Microseconds of delay used (default 50000)",
+    "    -d<msec>    Milliseconds of delay used (default 50)",
     0
 };
 
@@ -50,6 +52,7 @@ main(int argc, char *argv[])
     if (!strncmp("-d", argv[1], 2)) {
         char *delay_ptr = argv[1] + 2;
         delay_time = atoi(delay_ptr);
+        delay_time *= 1000;
         argnum++;
     }
 
